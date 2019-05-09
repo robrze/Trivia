@@ -4,8 +4,25 @@
 
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import axios from "axios";
+
+interface IState {
+  questions: Array;
+}
 
 class QuizScreen extends Component {
+  state = {
+    questions: []
+  };
+
+  componentDidMount() {
+    axios
+      .get("https://opentdb.com/api.php?amount=10&difficulty=hard&type=boolean")
+      .then(res => {
+        console.log(res);
+      });
+  }
+
   render() {
     return (
       <View style={styles.container}>
