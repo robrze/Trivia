@@ -3,21 +3,17 @@
 **/
 
 import React, { Component } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
-class HomeScreen extends Component {
+class QuizScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to the Trivia Challenge!</Text>
+        <Text style={styles.welcome}>Entertainment: Video Games</Text>
         <Text style={styles.description}>
-          You will be presented with 10 True or False questions.
+          Unturned originally started as a Roblox game.
         </Text>
-        <Text style={styles.description}>Can you score 100%?</Text>
-        <Button
-          title="BEGIN"
-          onPress={() => this.props.navigation.navigate("Quiz")}
-        />
+        <Text style={styles.description}>1 of 10</Text>
       </View>
     );
   }
@@ -43,4 +39,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default HomeScreen;
+export default QuizScreen;
