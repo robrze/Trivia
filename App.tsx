@@ -14,8 +14,20 @@ export default class App extends Component {
 
 const AppNavigator = createStackNavigator(
   {
-    Home: HomeScreen,
-    Quiz: QuizScreen
+    Home: { screen: HomeScreen, navigationOptions: { header: null } },
+    Quiz: {
+      screen: QuizScreen,
+      navigationOptions: {
+        headerTitleStyle: {
+          flex: 1,
+          textAlign: "center",
+          fontSize: 30,
+          marginRight: "20%",
+          color: "gray"
+        },
+        title: "Quiz"
+      }
+    }
   },
   {
     initialRouteName: "Home"

@@ -3,7 +3,8 @@
 **/
 
 import React, { Component } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { Button } from "../components";
 
 class HomeScreen extends Component {
   render() {
@@ -15,7 +16,7 @@ class HomeScreen extends Component {
         </Text>
         <Text style={styles.description}>Can you score 100%?</Text>
         <Button
-          title="BEGIN"
+          text="BEGIN"
           onPress={() => this.props.navigation.navigate("Quiz")}
         />
       </View>

@@ -5,7 +5,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import axios from "axios";
-import { number } from "prop-types";
+import { Button } from "../components";
 
 interface IState {
   questions: Array<Object>;
@@ -27,27 +27,36 @@ class QuizScreen extends Component {
         this.setState({
           questions: res.data.results
         });
-        console.log(this.state.questions);
       });
   }
 
   render() {
-    const { container, welcome, description } = styles;
+    const { buttonsContainer, container, category, question } = styles;
     const { questions, questionIndex } = this.state;
     if (questions.length === 0) return <View />;
     return (
       <View style={container}>
-        <Text style={welcome}>{questions[questionIndex].category}</Text>
-        <Text style={description}>
-          {questions[questionIndex].question.replace(/(&quot\;)/g, '"')}
+        <Text style={category}>{questions[questionIndex].category}</Text>
+        <Text style={question}>
+          {questions[questionIndex].question
+            .replace(/(&quot\;)/g, '"') // Wczytywane z API pytania mają &quot; zamiast cudzysłowów
+            .replace(/(&#039\;)/g, "'")}
         </Text>
-        <Text style={description}>1 of 10</Text>
+        <View style={buttonsContainer}>
+          <Button text="True" onPress={() => {}} />
+          <Button text="False" onPress={() => {}} />
+        </View>
+        <Text style={question}>1 of 10</Text>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  buttonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
   container: {
     flex: 1,
     justifyContent: "space-between",
@@ -55,13 +64,13 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 60
   },
-  welcome: {
+  category: {
     marginHorizontal: 30,
     fontSize: 25,
     textAlign: "center",
     fontWeight: "bold"
   },
-  description: {
+  question: {
     fontSize: 25,
     textAlign: "center"
   }
