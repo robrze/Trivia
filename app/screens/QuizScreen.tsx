@@ -5,32 +5,43 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import axios from "axios";
+import { number } from "prop-types";
 
 interface IState {
-  questions: Array;
+  questions: Array<Object>;
+  questionIndex: number;
+  points: number;
 }
 
 class QuizScreen extends Component {
-  state = {
-    questions: []
+  state: IState = {
+    points: 0,
+    questions: [],
+    questionIndex: 0
   };
 
   componentDidMount() {
     axios
       .get("https://opentdb.com/api.php?amount=10&difficulty=hard&type=boolean")
       .then(res => {
-        console.log(res);
+        this.setState({
+          questions: res.data.results
+        });
+        console.log(this.state.questions);
       });
   }
 
   render() {
+    const { container, welcome, description } = styles;
+    const { questions, questionIndex } = this.state;
+    if (questions.length === 0) return <View />;
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Entertainment: Video Games</Text>
-        <Text style={styles.description}>
-          Unturned originally started as a Roblox game.
+      <View style={container}>
+        <Text style={welcome}>{questions[questionIndex].category}</Text>
+        <Text style={description}>
+          {questions[questionIndex].question.replace(/(&quot\;)/g, '"')}
         </Text>
-        <Text style={styles.description}>1 of 10</Text>
+        <Text style={description}>1 of 10</Text>
       </View>
     );
   }
