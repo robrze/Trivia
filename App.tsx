@@ -4,7 +4,7 @@
 
 import React, { Component } from "react";
 import { createStackNavigator, createAppContainer } from "react-navigation";
-import { HomeScreen, QuizScreen } from "./app/screens";
+import { HomeScreen, QuizScreen, ResultsScreen } from "./app/screens";
 
 export default class App extends Component {
   render() {
@@ -26,6 +26,12 @@ const AppNavigator = createStackNavigator(
           color: "gray"
         },
         title: "Quiz"
+      }
+    },
+    Results: {
+      screen: ResultsScreen,
+      navigationOptions: {
+        title: "Score"
       }
     }
   },

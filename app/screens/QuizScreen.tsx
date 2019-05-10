@@ -30,12 +30,24 @@ class QuizScreen extends Component {
       });
   }
 
+  checkIfFinished() {
+    const { navigate } = this.props.navigation;
+    const { points, questionIndex } = this.state;
+
+    if (questionIndex == 10) navigate("Results", { points: points });
+  }
+
   render() {
+    this.checkIfFinished();
+    console.log("Im here. questionIndex: ", this.state.questionIndex);
     const { buttonsContainer, container, category, question } = styles;
-    const { questions, questionIndex } = this.state;
+    const { points, questions, questionIndex } = this.state;
+
+    this.checkIfFinished();
+
     const currentQuestion = questions[questionIndex];
 
-    if (questions.length === 0) return <View />;
+    if (!currentQuestion) return <View />;
     return (
       <View style={container}>
         <Text style={category}>{currentQuestion.category}</Text>
@@ -53,7 +65,7 @@ class QuizScreen extends Component {
                 this.setState(state => ({
                   points: state.points + 1
                 }));
-              }
+              } else console.log("nie zgadles");
               this.setState(state => ({
                 questionIndex: state.questionIndex + 1
               }));
@@ -67,7 +79,7 @@ class QuizScreen extends Component {
                 this.setState(state => ({
                   points: state.points + 1
                 }));
-              }
+              } else console.log("nie zgadles");
               this.setState(state => ({
                 questionIndex: state.questionIndex + 1
               }));
