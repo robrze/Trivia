@@ -33,20 +33,49 @@ class QuizScreen extends Component {
   render() {
     const { buttonsContainer, container, category, question } = styles;
     const { questions, questionIndex } = this.state;
+    const currentQuestion = questions[questionIndex];
+
     if (questions.length === 0) return <View />;
     return (
       <View style={container}>
-        <Text style={category}>{questions[questionIndex].category}</Text>
+        <Text style={category}>{currentQuestion.category}</Text>
         <Text style={question}>
-          {questions[questionIndex].question
+          {currentQuestion.question
             .replace(/(&quot\;)/g, '"') // Wczytywane z API pytania mają &quot; zamiast cudzysłowów
             .replace(/(&#039\;)/g, "'")}
         </Text>
         <View style={buttonsContainer}>
-          <Button text="True" onPress={() => {}} />
-          <Button text="False" onPress={() => {}} />
+          <Button
+            text="True"
+            onPress={() => {
+              if (currentQuestion.correct_answer === "True") {
+                console.log("zgadłeś!");
+                this.setState(state => ({
+                  points: state.points + 1
+                }));
+              }
+              this.setState(state => ({
+                questionIndex: state.questionIndex + 1
+              }));
+            }}
+          />
+          <Button
+            text="False"
+            onPress={() => {
+              if (currentQuestion.correct_answer === "False") {
+                console.log("zgadłeś!");
+                this.setState(state => ({
+                  points: state.points + 1
+                }));
+              }
+              this.setState(state => ({
+                questionIndex: state.questionIndex + 1
+              }));
+            }}
+          />
         </View>
-        <Text style={question}>1 of 10</Text>
+        <Text style={question}>points: {this.state.points}/10</Text>
+        <Text style={question}>{this.state.questionIndex + 1} of 10</Text>
       </View>
     );
   }
