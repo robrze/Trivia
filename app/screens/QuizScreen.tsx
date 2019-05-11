@@ -26,6 +26,8 @@ class QuizScreen extends Component {
     axios
       .get("https://opentdb.com/api.php?amount=10&difficulty=hard&type=boolean")
       .then(res => {
+        console.log(res.data.results.map(a => a.question));
+
         this.setState({
           questions: this.fixQuestions(res.data.results)
         });
@@ -51,17 +53,15 @@ class QuizScreen extends Component {
   checkIfFinished = () => {
     const { navigate } = this.props.navigation;
     const { points, questionIndex, questionScores, questions } = this.state;
-
     if (questionIndex == 10)
       navigate("Results", {
         points: points,
         questionScores: questionScores,
-        questions: questions
+        questions: questions.map(a => a.question)
       });
   };
 
   render() {
-    this.checkIfFinished();
     const { buttonsContainer, container, category, question } = styles;
     const { questions, questionIndex } = this.state;
 
