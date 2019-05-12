@@ -1,5 +1,11 @@
-import React, { Component, Fragment } from "react";
+/**
+@format
+**/
+
+import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { NavigationActions } from "react-navigation";
+import { Button } from "../components";
 
 class ResultsScreen extends Component {
   points: number;
@@ -15,10 +21,10 @@ class ResultsScreen extends Component {
     this.questions = getParam("questions");
   }
 
-  printQuestionsScores = () => {
+  renderQuestionsScores = () => {
     return this.questions.map((question, i) => {
       return (
-        <View style={styles.questions}>
+        <View key={question} style={styles.questions}>
           <Text style={{ fontWeight: "bold" }}>{this.questionScores[i]}</Text>
           <Text style={{ marginLeft: 5 }}>{question}</Text>
         </View>
@@ -30,7 +36,16 @@ class ResultsScreen extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.points}>You scored {this.points}/10</Text>
-        {this.printQuestionsScores()}
+        {this.renderQuestionsScores()}
+        <Button
+          style={{ alignSelf: "center" }}
+          text="PLAY AGAIN?"
+          onPress={() =>
+            this.props.navigation.reset([
+              NavigationActions.navigate({ routeName: "Quiz" })
+            ])
+          }
+        />
       </View>
     );
   }

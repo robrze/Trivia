@@ -18,20 +18,27 @@ const AppNavigator = createStackNavigator(
     Quiz: {
       screen: QuizScreen,
       navigationOptions: {
+        title: "Quiz",
         headerTitleStyle: {
           flex: 1,
           textAlign: "center",
           fontSize: 30,
-          marginRight: "20%",
           color: "gray"
         },
-        title: "Quiz"
+        headerLeft: null
       }
     },
     Results: {
       screen: ResultsScreen,
       navigationOptions: {
-        title: "Score"
+        title: "Score",
+        headerTitleStyle: {
+          flex: 1,
+          textAlign: "center",
+          fontSize: 30,
+          color: "gray"
+        },
+        headerLeft: null
       }
     }
   },

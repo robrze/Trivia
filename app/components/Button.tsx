@@ -13,7 +13,7 @@ const Button = (props: IProps) => (
     style={[styles.button, props.style, { backgroundColor: props.bgColor }]}
     onPress={props.onPress}
   >
-    <Text>{props.text}</Text>
+    <Text style={styles.text}>{props.text}</Text>
   </TouchableOpacity>
 );
 
@@ -26,6 +26,10 @@ const styles = StyleSheet.create({
     height: 45,
     margin: 3,
     paddingHorizontal: 25
+  },
+  text: {
+    textAlign: "center",
+    fontSize: 16
   }
 });
 
