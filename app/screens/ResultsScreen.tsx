@@ -5,6 +5,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationActions } from "react-navigation";
+import { AndroidBackHandler } from "react-navigation-backhandler";
 import { Button } from "../components";
 
 class ResultsScreen extends Component {
@@ -21,6 +22,11 @@ class ResultsScreen extends Component {
     this.questions = getParam("questions");
   }
 
+  onBackButtonPressAndroid = () => {
+    // Dzięki temu hardware'owy back button będzie zablokowany
+    return true;
+  };
+
   renderQuestionsScores = () => {
     return this.questions.map((question, i) => {
       return (
@@ -34,19 +40,21 @@ class ResultsScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.points}>You scored {this.points}/10</Text>
-        {this.renderQuestionsScores()}
-        <Button
-          style={{ alignSelf: "center" }}
-          text="PLAY AGAIN?"
-          onPress={() =>
-            this.props.navigation.reset([
-              NavigationActions.navigate({ routeName: "Quiz" })
-            ])
-          }
-        />
-      </View>
+      <AndroidBackHandler onBackPress={this.onBackButtonPressAndroid}>
+        <View style={styles.container}>
+          <Text style={styles.points}>You scored {this.points}/10</Text>
+          {this.renderQuestionsScores()}
+          <Button
+            style={{ alignSelf: "center" }}
+            text="PLAY AGAIN?"
+            onPress={() =>
+              this.props.navigation.reset([
+                NavigationActions.navigate({ routeName: "Quiz" })
+              ])
+            }
+          />
+        </View>
+      </AndroidBackHandler>
     );
   }
 }
