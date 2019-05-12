@@ -5,6 +5,7 @@
 import React, { Component } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import axios from "axios";
+import { Avatar, Card, Title, Paragraph } from "react-native-paper";
 import { Button } from "../components";
 
 interface IState {
@@ -61,28 +62,26 @@ class QuizScreen extends Component {
       });
   };
 
-  render() {
-    const { buttonsContainer, container, category, question } = styles;
+  renderCard = () => {
     const { questions, questionIndex } = this.state;
-
-    this.checkIfFinished();
 
     const currentQuestion = questions[questionIndex];
 
-    if (!currentQuestion)
-      return (
-        <ActivityIndicator
-          style={{ marginTop: 20 }}
-          size="large"
-          color="gray"
-        />
-      );
     return (
-      <View style={container}>
-        <Text style={category}>{currentQuestion.category}</Text>
-        <Text style={question}>{currentQuestion.question}</Text>
-        <View style={buttonsContainer}>
+      <Card style={{ height: 250, width: 300 }}>
+        <Card.Content>
+          <Title style={{ textAlign: "center", color: "gray" }}>
+            {currentQuestion.category}
+          </Title>
+          <Paragraph style={{ textAlign: "center", color: "gray" }}>
+            {currentQuestion.question}
+          </Paragraph>
+        </Card.Content>
+        <Card.Actions
+          style={{ flex: 1, justifyContent: "center", alignItems: "flex-end" }}
+        >
           <Button
+            style={{ width: 120 }}
             text="True"
             onPress={() => {
               if (currentQuestion.correct_answer === "True") {
@@ -92,12 +91,14 @@ class QuizScreen extends Component {
                 }));
                 this.changeQuestionScore(questionIndex);
               }
+              currentQuestion.category;
               this.setState(state => ({
                 questionIndex: state.questionIndex + 1
               }));
             }}
           />
           <Button
+            style={{ width: 120 }}
             text="False"
             onPress={() => {
               if (currentQuestion.correct_answer === "False") {
@@ -112,28 +113,47 @@ class QuizScreen extends Component {
               }));
             }}
           />
-        </View>
-        <Text style={question}>points: {this.state.points}/10</Text>
+        </Card.Actions>
+      </Card>
+    );
+  };
+
+  render() {
+    const { container, question } = styles;
+    const { questions, questionIndex } = this.state;
+
+    this.checkIfFinished();
+
+    const currentQuestion = questions[questionIndex];
+
+    if (!currentQuestion)
+      return (
+        <ActivityIndicator
+          style={{ marginTop: 20 }}
+          size="large"
+          color="gray"
+        />
+      );
+
+    return (
+      <View style={container}>
+        {this.renderCard()}
         <Text style={question}>{this.state.questionIndex + 1} of 10</Text>
+        <Text style={question}>points: {this.state.points}/10</Text>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
   container: {
     flex: 1,
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     alignItems: "center",
     marginVertical: 10,
     marginHorizontal: 60
   },
   category: {
-    marginHorizontal: 30,
     fontSize: 25,
     textAlign: "center",
     fontWeight: "bold"
