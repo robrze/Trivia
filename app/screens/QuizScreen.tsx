@@ -3,7 +3,7 @@
 **/
 
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import axios from "axios";
 import { Button } from "../components";
 
@@ -69,7 +69,14 @@ class QuizScreen extends Component {
 
     const currentQuestion = questions[questionIndex];
 
-    if (!currentQuestion) return <View />;
+    if (!currentQuestion)
+      return (
+        <ActivityIndicator
+          style={{ marginTop: 20 }}
+          size="large"
+          color="gray"
+        />
+      );
     return (
       <View style={container}>
         <Text style={category}>{currentQuestion.category}</Text>
