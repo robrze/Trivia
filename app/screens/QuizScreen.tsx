@@ -104,18 +104,12 @@ class QuizScreen extends Component {
   }
 
   renderCard() {
+    const { card } = styles;
     const { questions, questionIndex } = this.state;
     const currentQuestion = questions[questionIndex];
     return (
-      <Card
-        style={{
-          height: 250,
-          width: 300,
-          borderWidth: 1,
-          borderColor: "gray"
-        }}
-      >
-        <Card.Content style={{ top: 0 }}>
+      <Card style={card}>
+        <Card.Content>
           <Title style={{ textAlign: "center", color: "gray" }}>
             {currentQuestion.category}
           </Title>
@@ -125,7 +119,7 @@ class QuizScreen extends Component {
         </Card.Content>
         <Card.Actions
           style={{
-            flex: 1,
+            // flex: 1,
             justifyContent: "center",
             alignItems: "flex-end"
           }}
@@ -173,6 +167,12 @@ const styles = StyleSheet.create({
     fontSize: 25,
     textAlign: "center",
     fontWeight: "bold"
+  },
+  card: {
+    height: 250,
+    width: 300,
+    borderWidth: 1,
+    borderColor: "gray"
   },
   stats: {
     marginTop: 50,
