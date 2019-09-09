@@ -13,6 +13,10 @@ interface IState {
   questionIndex: number;
   questionScores: Array<string>;
   points: number;
+  ons;
+  questionIndex;
+  questionScores;
+  points;
 }
 
 class QuizScreen extends Component {
@@ -27,8 +31,6 @@ class QuizScreen extends Component {
     axios
       .get("https://opentdb.com/api.php?amount=10&difficulty=hard&type=boolean")
       .then(res => {
-        console.log(res.data.results.map(a => a.question));
-
         this.setState({
           questions: this.fixQuestions(res.data.results)
         });
@@ -78,7 +80,6 @@ class QuizScreen extends Component {
               }));
               this.changeQuestionScore(questionIndex);
             }
-            currentQuestion.category;
             this.setState(state => ({
               questionIndex: state.questionIndex + 1
             }));
@@ -119,9 +120,9 @@ class QuizScreen extends Component {
         </Card.Content>
         <Card.Actions
           style={{
-            // flex: 1,
-            justifyContent: "center",
-            alignItems: "flex-end"
+            flex: 1,
+            alignItems: "flex-end",
+            justifyContent: "center"
           }}
         >
           {this.renderButtons()}
